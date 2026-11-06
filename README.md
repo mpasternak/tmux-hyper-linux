@@ -82,10 +82,11 @@ cp tmux.conf ~/.tmux.conf
 | `Caps+→` | następne okno | `S-F2` |
 | `Caps+←` | poprzednie okno | `S-F3` |
 | `Caps+Space` | last-window (toggle) | `M-S-F6` |
+| `Caps+F` | szukaj w historii panelu (copy-mode, przyrostowo) | `M-S-F7` |
 | `Caps+T` | wybierz okno z listy | `C-S-F3` |
 | `Caps+S` | wybierz sesję z listy | `M-S-F5` |
 | `Caps+R` | rename bieżącego okna | `M-S-F1` |
-| `Caps+D` | detach | `S-F10` |
+| `Caps+D` | detach (wysyła `` ` d ``, nie `S-F10` — patrz Troubleshooting) | prefix + `d` |
 
 **Panele**
 
@@ -95,6 +96,7 @@ cp tmux.conf ~/.tmux.conf
 | `Caps+L` | panel w prawo | `M-S-F2` |
 | `Caps+↑` | nowy panel **above** | `C-S-F1` |
 | `Caps+-` | nowy panel **below** | `S-F9` |
+| `Caps+↓` | nowy panel **below** (jak `Caps+-`) | `S-F9` |
 | `Caps+/` | nowy panel **left** | `M-S-F4` |
 | `Caps+\` | nowy panel **right** | `M-S-F3` |
 | `Caps+Z` | zoom panela (toggle) | `S-F11` |
@@ -124,7 +126,7 @@ Literalny backtick: `` ` `` dwa razy.
 4. Żeby działało też na Macu — dopisz tę samą regułę do
    `karabiner-hyper-tmux.json` w tmux-hyper-mac.
 
-Wolne sloty: `S-F7`, `S-F8`, `C-S-F2`, `C-S-F4..F12`, `M-S-F7..F12`.
+Wolne sloty: `S-F7`, `S-F8`, `C-S-F2`, `C-S-F4..F12`, `M-S-F8..F12`.
 Na Linuksie nie ma ograniczeń macOS (Full Keyboard Access), ale żeby config był
 wspólny, nowe bindy najlepiej dawać na kanał 3 (`Alt+Shift+Fn`).
 
@@ -151,12 +153,25 @@ Jeśli tak, a tmux nie reaguje — sprawdź `tmux list-keys -T root | grep S-F1`
 
 ### `Caps+D` otwiera menu kontekstowe terminala
 
-Część terminali GTK traktuje `Shift+F10` jako „otwórz menu”. Jeśli tak jest
-u Ciebie — przenieś `d` w keyd na wolny slot (np. `d = A-S-f7`) i w tmux.conf
-zmień `bind -n S-F10` na `bind -n M-S-F7`.
+Terminale GTK traktują `Shift+F10` jako „otwórz menu”, dlatego `keyd/default.conf`
+mapuje `d = macro(grave d)` — keyd wysyła po prostu prefix + `d`. Jeśli zmieniłeś
+prefix, popraw `grave` w tej linii.
 
 ### Caps nadal włącza wielkie litery
 
 `systemctl status keyd` — usługa musi być `active`. Jeśli jest, sprawdź
 `sudo keyd.rvaiya monitor`, czy klawiatura w ogóle jest przechwytywana
 (sekcja `[ids]` z `*` łapie wszystkie klawiatury).
+
+### Scroll przełącza zakładki terminala (Ghostty)
+
+Pasek zakładek GTK (AdwTabBar) przełącza zakładki kółkiem/touchpadem. Przy
+scrollowaniu historii tmuxa tuż pod paskiem łatwo zmienić zakładkę. W Ghostty:
+`gtk-tabs-location = hidden` (licznik zakładek + przegląd zostają w titlebarze).
+Osobno: tmux domyślnie przełącza **okna** kółkiem nad status barem —
+`tmux.conf` wyłącza to (`unbind -n WheelUpStatus` / `WheelDownStatus`).
+
+### Ctrl+Shift+F w terminalu nie znajduje starszego outputu
+
+Historia siedzi w tmuxie, nie w terminalu — szukaj przez `Caps+F` albo
+prefix + `/` (copy-mode, przyrostowo; `n`/`N` następne/poprzednie).
