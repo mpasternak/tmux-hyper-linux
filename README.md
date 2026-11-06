@@ -163,13 +163,10 @@ prefix, popraw `grave` w tej linii.
 `sudo keyd.rvaiya monitor`, czy klawiatura w ogóle jest przechwytywana
 (sekcja `[ids]` z `*` łapie wszystkie klawiatury).
 
-### Scroll przełącza zakładki terminala (Ghostty)
+### Kółko myszy nad status barem przełącza okna tmuxa
 
-Pasek zakładek GTK (AdwTabBar) przełącza zakładki kółkiem/touchpadem. Przy
-scrollowaniu historii tmuxa tuż pod paskiem łatwo zmienić zakładkę. W Ghostty:
-`gtk-tabs-location = hidden` (licznik zakładek + przegląd zostają w titlebarze).
-Osobno: tmux domyślnie przełącza **okna** kółkiem nad status barem —
-`tmux.conf` wyłącza to (`unbind -n WheelUpStatus` / `WheelDownStatus`).
+Domyślne bindy tmuxa `WheelUpStatus` / `WheelDownStatus` robią
+previous/next-window — `tmux.conf` je wyłącza.
 
 ### Ctrl+Shift+F w terminalu nie znajduje starszego outputu
 
